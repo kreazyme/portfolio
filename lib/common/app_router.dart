@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:example_template/pages/home/home_page.dart';
 import 'package:example_template/pages/onboarding/onboarding_page.dart';
 import 'package:example_template/pages/policy/policy_page.dart';
+import 'package:example_template/pages/portfolio/portfolio_page.dart';
 import 'package:example_template/pages/splash/splash_page.dart';
 import 'package:example_template/pages/terms/terms_page.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,13 @@ class AppRoutePaths {
   static const splash = '/';
   static const onboarding = '/onboarding';
   static const home = '/home';
+  static const portfolio = '/portfolio';
   static const policy = '/policy';
   static const terms = '/terms';
 }
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutePaths.splash,
+  initialLocation: AppRoutePaths.portfolio,
   observers: [AppNavigatorObserver()],
   routes: [
     GoRoute(
@@ -33,6 +35,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutePaths.home,
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: AppRoutePaths.portfolio,
+      builder: (context, state) => const PortfolioPage(),
     ),
     GoRoute(
       path: AppRoutePaths.policy,

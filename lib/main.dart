@@ -16,7 +16,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     return MaterialApp.router(
-      title: 'Example Template',
+      title: 'Tran Duc Thong - Mobile Developer',
       locale: TranslationProvider.of(context).flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: [...GlobalMaterialLocalizations.delegates],

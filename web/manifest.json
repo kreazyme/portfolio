@@ -1,11 +1,11 @@
 {
-    "name": "example_template",
-    "short_name": "example_template",
+    "name": "Tran Duc Thong Portfolio",
+    "short_name": "Tran Duc Thong",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
-    "description": "A new Flutter project.",
+    "description": "A portfolio app built with Flutter, showcasing projects and skills in a clean and modern design.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

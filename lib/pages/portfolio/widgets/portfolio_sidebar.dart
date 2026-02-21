@@ -1,8 +1,23 @@
 import 'package:example_template/common/theme.dart';
 import 'package:flutter/material.dart';
 
+enum SidebarSection { about, projects, skills, contact }
+
 class PortfolioSidebar extends StatelessWidget {
-  const PortfolioSidebar({super.key});
+  const PortfolioSidebar({
+    super.key,
+    required this.selectedSection,
+    required this.onAboutTap,
+    required this.onProjectsTap,
+    required this.onSkillsTap,
+    required this.onContactTap,
+  });
+
+  final SidebarSection selectedSection;
+  final VoidCallback onAboutTap;
+  final VoidCallback onProjectsTap;
+  final VoidCallback onSkillsTap;
+  final VoidCallback onContactTap;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,7 @@ class PortfolioSidebar extends StatelessWidget {
                 boxShadow: AppTheme.brutalShadow(isDark),
                 image: const DecorationImage(
                   image: NetworkImage(
-                    'https://avatars.githubusercontent.com/u/yourusername',
+                    'https://avatars.githubusercontent.com/u/79961692',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -114,17 +129,36 @@ class PortfolioSidebar extends StatelessWidget {
     Color borderColor,
   ) {
     final menuItems = [
-      {'icon': Icons.home, 'label': 'Home', 'active': true},
-      {'icon': Icons.person, 'label': 'About', 'active': false},
-      {'icon': Icons.description, 'label': 'Resume', 'active': false},
-      {'icon': Icons.grid_view, 'label': 'Portfolio', 'active': false},
-      {'icon': Icons.edit_note, 'label': 'Blog', 'active': false},
-      {'icon': Icons.mail, 'label': 'Contact', 'active': false},
+      {
+        'icon': Icons.person,
+        'label': 'About',
+        'section': SidebarSection.about,
+        'onTap': onAboutTap,
+      },
+      {
+        'icon': Icons.grid_view,
+        'label': 'Projects',
+        'section': SidebarSection.projects,
+        'onTap': onProjectsTap,
+      },
+      {
+        'icon': Icons.extension,
+        'label': 'Skills',
+        'section': SidebarSection.skills,
+        'onTap': onSkillsTap,
+      },
+      {
+        'icon': Icons.mail,
+        'label': 'Contact',
+        'section': SidebarSection.contact,
+        'onTap': onContactTap,
+      },
     ];
 
     return Column(
       children: menuItems.map((item) {
-        final isActive = item['active'] as bool;
+        final section = item['section'] as SidebarSection;
+        final isActive = selectedSection == section;
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: _buildNavItem(
@@ -134,6 +168,7 @@ class PortfolioSidebar extends StatelessWidget {
             item['icon'] as IconData,
             item['label'] as String,
             isActive,
+            item['onTap'] as VoidCallback,
           ),
         );
       }).toList(),
@@ -147,34 +182,38 @@ class PortfolioSidebar extends StatelessWidget {
     IconData icon,
     String label,
     bool isActive,
+    VoidCallback onTap,
   ) {
     if (isActive) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: isDark ? AppTheme.cardDark : AppTheme.backgroundLight,
-          border: Border.all(color: borderColor, width: 2),
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: AppTheme.brutalShadow(isDark),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label.toUpperCase(),
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
+      return InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: isDark ? AppTheme.cardDark : AppTheme.backgroundLight,
+            border: Border.all(color: borderColor, width: 2),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: AppTheme.brutalShadow(isDark),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label.toUpperCase(),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
               ),
-            ),
-            Icon(Icons.arrow_forward, size: 18),
-          ],
+              Icon(Icons.arrow_forward, size: 18),
+            ],
+          ),
         ),
       );
     }
 
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
@@ -212,9 +251,9 @@ class PortfolioSidebar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildSocialButton(context, isDark, borderColor, Icons.code),
+              _buildSocialButton(isDark, borderColor, Icons.code),
               const SizedBox(width: 16),
-              _buildSocialButton(context, isDark, borderColor, Icons.email),
+              _buildSocialButton(isDark, borderColor, Icons.email),
             ],
           ),
           const SizedBox(height: 16),
@@ -260,12 +299,7 @@ class PortfolioSidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialButton(
-    BuildContext context,
-    bool isDark,
-    Color borderColor,
-    IconData icon,
-  ) {
+  Widget _buildSocialButton(bool isDark, Color borderColor, IconData icon) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(

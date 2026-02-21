@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:example_template/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -54,30 +57,30 @@ class ProjectsSection extends StatelessWidget {
     final projects = [
       {
         'title': 'E-Commerce App',
-        'subtitle': 'Flutter & Firebase',
+        'description':
+            'A complete mobile shopping experience with secure payments, real-time inventory, and smooth checkout flow.',
         'tags': ['Flutter', 'Firebase', 'Stripe'],
         'image':
             'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600',
+        'link': 'https://example.com/ecommerce',
       },
       {
         'title': 'Fintech Dashboard',
-        'subtitle': 'Full Stack Development',
+        'description':
+            'A data-rich finance dashboard with analytics, budgeting tools, and personalized insights.',
         'tags': ['Flutter', 'Node.js', 'PostgreSQL'],
         'image':
             'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600',
+        'link': 'https://example.com/fintech',
       },
       {
         'title': 'Fitness Tracker',
-        'subtitle': 'Mobile App Design',
+        'description':
+            'A health-focused app for activity tracking, goals, and progress insights with a bold UI.',
         'tags': ['Flutter', 'UI/UX', 'HealthKit'],
         'image':
             'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600',
-      },
-      {
-        'title': 'View All Projects',
-        'subtitle': null,
-        'tags': null,
-        'image': null,
+        'link': 'https://example.com/fitness',
       },
     ];
 
@@ -96,17 +99,15 @@ class ProjectsSection extends StatelessWidget {
           itemCount: projects.length,
           itemBuilder: (context, index) {
             final project = projects[index];
-            if (project['image'] == null) {
-              return _buildViewAllCard(context, isDark, borderColor);
-            }
             return _buildProjectCard(
               context,
               isDark,
               borderColor,
               project['title'] as String,
-              project['subtitle'] as String,
+              project['description'] as String,
               project['tags'] as List<String>,
               project['image'] as String,
+              project['link'] as String,
             );
           },
         );
@@ -119,14 +120,15 @@ class ProjectsSection extends StatelessWidget {
     bool isDark,
     Color borderColor,
     String title,
-    String subtitle,
+    String description,
     List<String> tags,
     String imageUrl,
+    String link,
   ) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () => _openLink(link),
         child: Container(
           decoration: BoxDecoration(
             color: isDark ? AppTheme.cardDark : AppTheme.brutalWhite,
@@ -164,46 +166,22 @@ class ProjectsSection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  title,
-                                  style: Theme.of(context).textTheme.titleLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: -0.5,
-                                      ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  subtitle,
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                      ?.copyWith(
-                                        color: isDark
-                                            ? Colors.grey[400]
-                                            : Colors.grey[600],
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Transform.rotate(
-                            angle: -0.785,
-                            child: Icon(
-                              Icons.arrow_forward,
-                              size: 32,
-                              color: borderColor,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.5,
+                        ),
                       ),
-                      const Spacer(),
+                      const SizedBox(height: 8),
+                      Text(
+                        description,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: isDark ? Colors.grey[300] : Colors.grey[700],
+                          height: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -228,6 +206,29 @@ class ProjectsSection extends StatelessWidget {
                           );
                         }).toList(),
                       ),
+                      const Spacer(),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: OutlinedButton.icon(
+                          onPressed: () => _openLink(link),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: borderColor, width: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                          ),
+                          icon: const Icon(Icons.open_in_new, size: 18),
+                          label: Text(
+                            'OPEN PROJECT',
+                            style: Theme.of(context).textTheme.labelLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -239,52 +240,23 @@ class ProjectsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildViewAllCard(
-    BuildContext context,
-    bool isDark,
-    Color borderColor,
-  ) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppTheme.primaryPurple,
-            border: Border.all(color: borderColor, width: 4),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: AppTheme.brutalShadow(isDark),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'VIEW ALL\nPROJECTS',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  color: AppTheme.brutalWhite,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: isDark ? AppTheme.brutalWhite : AppTheme.brutalBlack,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: borderColor, width: 2),
-                ),
-                child: Icon(
-                  Icons.arrow_forward,
-                  size: 32,
-                  color: isDark ? AppTheme.brutalBlack : AppTheme.brutalWhite,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Future<void> _openLink(String url) async {
+    final uri = Uri.tryParse(url);
+    if (uri == null) {
+      log('Invalid url: $url', name: 'ProjectsSection');
+      return;
+    }
+
+    try {
+      final didLaunch = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!didLaunch) {
+        log('Could not launch url: $url', name: 'ProjectsSection');
+      }
+    } catch (error) {
+      log('Failed to launch url: $url', name: 'ProjectsSection', error: error);
+    }
   }
 }

@@ -7,25 +7,68 @@ import 'package:example_template/pages/portfolio/widgets/projects_section.dart';
 import 'package:example_template/pages/portfolio/widgets/skills_section.dart';
 import 'package:flutter/material.dart';
 
-class PortfolioPage extends StatelessWidget {
+class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
+
+  @override
+  State<PortfolioPage> createState() => _PortfolioPageState();
+}
+
+class _PortfolioPageState extends State<PortfolioPage> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _aboutKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+  SidebarSection _selectedSection = SidebarSection.about;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollTo(GlobalKey key, SidebarSection section) {
+    setState(() {
+      _selectedSection = section;
+    });
+
+    final context = key.currentContext;
+    if (context == null) {
+      return;
+    }
+
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isLargeScreen = MediaQuery.of(context).size.width >= 1024;
 
+    final sidebar = PortfolioSidebar(
+      selectedSection: _selectedSection,
+      onAboutTap: () => _scrollTo(_aboutKey, SidebarSection.about),
+      onProjectsTap: () => _scrollTo(_projectsKey, SidebarSection.projects),
+      onSkillsTap: () => _scrollTo(_skillsKey, SidebarSection.skills),
+      onContactTap: () => _scrollTo(_contactKey, SidebarSection.contact),
+    );
+
     return Scaffold(
       body: isLargeScreen
           ? Row(
               children: [
-                const SizedBox(width: 320, child: PortfolioSidebar()),
+                SizedBox(width: 320, child: sidebar),
                 Expanded(child: _buildMainContent(isDark)),
               ],
             )
           : Column(
               children: [
-                const PortfolioSidebar(),
+                sidebar,
                 Expanded(child: _buildMainContent(isDark)),
               ],
             ),
@@ -42,14 +85,15 @@ class PortfolioPage extends StatelessWidget {
           ),
         ),
       ),
-      child: const SingleChildScrollView(
+      child: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            HeroSection(),
-            ProjectsSection(),
-            SkillsSection(),
-            BlogSection(),
-            ContactSection(),
+            HeroSection(key: _aboutKey),
+            ProjectsSection(key: _projectsKey),
+            SkillsSection(key: _skillsKey),
+            ContactSection(key: _contactKey),
+            const BlogSection(),
           ],
         ),
       ),

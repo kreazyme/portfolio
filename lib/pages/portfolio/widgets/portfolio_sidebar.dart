@@ -92,7 +92,7 @@ class PortfolioSidebar extends StatelessWidget {
         const SizedBox(height: 16),
         // Name
         Text(
-          'THONG TRAN',
+          'TRAN DUC THONG',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w900,
             letterSpacing: -0.5,

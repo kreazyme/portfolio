@@ -124,8 +124,7 @@ class HeroSection extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Crafting beautiful, performant mobile applications with Flutter. '
-            'Specialized in creating stunning user interfaces that users love.',
+            'Hi, I am a Software Engineer with 3+ years of exper iences, focusing on Flutter and React Native - modern cross plassform frame-works. Now I am living in Đà Nẵng city and I’d love to create some community products. I’m also open to working with others who share the same mindset, so we can build and launch meaningful products together.',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: isDark ? Colors.grey[300] : Colors.grey[700],
               height: 1.5,

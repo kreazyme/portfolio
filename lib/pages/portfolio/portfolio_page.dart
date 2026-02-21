@@ -21,9 +21,21 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final GlobalKey _skillsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
   SidebarSection _selectedSection = SidebarSection.about;
+  bool _isListening = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _isListening = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _onScroll());
+  }
 
   @override
   void dispose() {
+    if (_isListening) {
+      _scrollController.removeListener(_onScroll);
+    }
     _scrollController.dispose();
     super.dispose();
   }
@@ -43,6 +55,56 @@ class _PortfolioPageState extends State<PortfolioPage> {
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
+  }
+
+  void _onScroll() {
+    final selected = _getSectionForOffset(_scrollController.offset + 120);
+    if (selected != null && selected != _selectedSection) {
+      setState(() {
+        _selectedSection = selected;
+      });
+    }
+  }
+
+  SidebarSection? _getSectionForOffset(double offset) {
+    final sections = [
+      _sectionOffset(_aboutKey, SidebarSection.about),
+      _sectionOffset(_projectsKey, SidebarSection.projects),
+      _sectionOffset(_skillsKey, SidebarSection.skills),
+      _sectionOffset(_contactKey, SidebarSection.contact),
+    ].whereType<_SectionOffset>().toList();
+
+    if (sections.isEmpty) {
+      return null;
+    }
+
+    sections.sort((a, b) => a.offset.compareTo(b.offset));
+
+    SidebarSection current = sections.first.section;
+    for (final section in sections) {
+      if (offset >= section.offset) {
+        current = section.section;
+      }
+    }
+    return current;
+  }
+
+  _SectionOffset? _sectionOffset(GlobalKey key, SidebarSection section) {
+    final context = key.currentContext;
+    if (context == null || !_scrollController.hasClients) {
+      return null;
+    }
+
+    final box = context.findRenderObject() as RenderBox?;
+    final scrollBox =
+        _scrollController.position.context.storageContext.findRenderObject()
+            as RenderBox?;
+    if (box == null || scrollBox == null) {
+      return null;
+    }
+
+    final dy = box.localToGlobal(Offset.zero, ancestor: scrollBox).dy;
+    return _SectionOffset(section, dy + _scrollController.offset);
   }
 
   @override
@@ -99,4 +161,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ),
     );
   }
+}
+
+class _SectionOffset {
+  const _SectionOffset(this.section, this.offset);
+
+  final SidebarSection section;
+  final double offset;
 }

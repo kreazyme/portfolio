@@ -133,7 +133,7 @@ class ContactSection extends StatelessWidget {
                     Icon(Icons.email, size: 20, color: AppTheme.primaryPurple),
                     const SizedBox(width: 12),
                     Text(
-                      'thong.tran@example.com',
+                      'spoon.me.dev@gmail.com',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                       ),

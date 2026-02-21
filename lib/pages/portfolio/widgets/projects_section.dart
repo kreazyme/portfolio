@@ -56,31 +56,109 @@ class ProjectsSection extends StatelessWidget {
   ) {
     final projects = [
       {
-        'title': 'E-Commerce App',
+        'title': 'SharingHub',
         'description':
-            'A complete mobile shopping experience with secure payments, real-time inventory, and smooth checkout flow.',
-        'tags': ['Flutter', 'Firebase', 'Stripe'],
+            'A charity community app integrating Google Maps and Firebase for sharing and local support.',
+        'tags': [
+          'Flutter',
+          'Google Maps',
+          'ExpressJS',
+          'flutter_bloc',
+          'flutter_gen',
+          'Flavor',
+        ],
         'image':
-            'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600',
-        'link': 'https://example.com/ecommerce',
+            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900',
+        'link': 'https://github.com/dscdut/sharinghub',
       },
       {
-        'title': 'Fintech Dashboard',
+        'title': 'Image Edit App',
         'description':
-            'A data-rich finance dashboard with analytics, budgeting tools, and personalized insights.',
-        'tags': ['Flutter', 'Node.js', 'PostgreSQL'],
+            'An app that adds trending frames to photos with minimal editing, available on Google Play and App Store.',
+        'tags': ['Flutter', 'Firebase', 'RevenueCat'],
         'image':
-            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600',
-        'link': 'https://example.com/fintech',
+            'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900',
+        'link':
+            'https://play.google.com/store/apps/details?id=spoon.app.frame_it',
       },
       {
-        'title': 'Fitness Tracker',
-        'description':
-            'A health-focused app for activity tracking, goals, and progress insights with a bold UI.',
-        'tags': ['Flutter', 'UI/UX', 'HealthKit'],
+        'title': 'Chuyển tọa độ',
+        'description': 'Convert VN-2000 location coordinates to WGS-84.',
+        'tags': ['Flutter'],
         'image':
-            'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600',
-        'link': 'https://example.com/fitness',
+            'https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900',
+        'link':
+            'https://play.google.com/store/apps/details?id=spoon.app.chuyen_toa_do',
+      },
+      {
+        'title': 'Pay Cutter',
+        'description':
+            'Capstone project for splitting bills within a group with a smooth collaboration flow.',
+        'tags': ['Flutter', 'ExpressJS', 'GCP'],
+        'image':
+            'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900',
+        'link': 'https://github.com/kreazyme/pay_cutter',
+      },
+      {
+        'title': 'Bus App',
+        'description':
+            'Redesigned a bus website into a user-friendly mobile experience with WebView.',
+        'tags': ['Flutter', 'Bloc', 'WebView'],
+        'image':
+            'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900',
+        'link': 'https://example.com/bus-app',
+      },
+      {
+        'title': 'Attendance App',
+        'description':
+            'Attendance app with location check-in, announcements, and analytics via charts and WebSocket.',
+        'tags': ['Flutter', 'Bloc', 'flutter_chart', 'Location', 'WebSocket'],
+        'image':
+            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900',
+        'link': 'https://example.com/attendance-app',
+      },
+      {
+        'title': 'Travel App',
+        'description':
+            'Booking app for hotels with payment, camera capture, and social sharing features.',
+        'tags': ['React Native', 'Redux', 'Async Storage', 'Stripe', 'Camera'],
+        'image':
+            'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900',
+        'link': 'https://example.com/travel-app',
+      },
+      {
+        'title': 'Trash Collecting App',
+        'description':
+            'A garbage collection app with real-time tracking and detailed waste info capture.',
+        'tags': ['Flutter', 'Camera', 'Google Maps', 'RxDart'],
+        'image':
+            'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900',
+        'link': 'https://example.com/trash-collecting-app',
+      },
+      {
+        'title': 'Point App',
+        'description':
+            'Points collection app for urban tourism with QR scanning and payment integrations.',
+        'tags': [
+          'React Native',
+          'RTK Query',
+          'Async Storage',
+          'Stripe',
+          'PayPay',
+          'Biometrics',
+        ],
+        'image':
+            'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?w=900',
+        'link': 'https://example.com/point-app',
+      },
+      {
+        'title': 'Resource Manage App',
+        'description':
+            'Internal super app for HR management, kudos, and remote requests.',
+        'tags': ['SuperApp', 'Flutter', 'FormBuilder', 'ReactJS', 'NestJS'],
+        'image':
+            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900',
+        'link': 'https://example.com/resource-manage-app',
       },
     ];
 

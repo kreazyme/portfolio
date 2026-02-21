@@ -4,8 +4,10 @@ import 'package:example_template/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(ProviderScope(child: TranslationProvider(child: const MyApp())));
 }
 

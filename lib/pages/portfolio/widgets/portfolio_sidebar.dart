@@ -11,6 +11,7 @@ class PortfolioSidebar extends StatelessWidget {
     required this.onProjectsTap,
     required this.onSkillsTap,
     required this.onContactTap,
+    this.enableInternalScroll = true,
   });
 
   final SidebarSection selectedSection;
@@ -18,6 +19,7 @@ class PortfolioSidebar extends StatelessWidget {
   final VoidCallback onProjectsTap;
   final VoidCallback onSkillsTap;
   final VoidCallback onContactTap;
+  final bool enableInternalScroll;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +36,22 @@ class PortfolioSidebar extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
+          if (enableInternalScroll)
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildProfile(context, isDark, borderColor),
+                    const SizedBox(height: 32),
+                    _buildNavigation(context, isDark, borderColor),
+                  ],
+                ),
+              ),
+            )
+          else
+            Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +62,6 @@ class PortfolioSidebar extends StatelessWidget {
                 ],
               ),
             ),
-          ),
           _buildFooter(context, isDark, borderColor),
         ],
       ),

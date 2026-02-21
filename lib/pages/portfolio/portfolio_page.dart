@@ -128,11 +128,29 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 Expanded(child: _buildMainContent(isDark)),
               ],
             )
-          : Column(
-              children: [
-                sidebar,
-                Expanded(child: _buildMainContent(isDark)),
-              ],
+          : SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  PortfolioSidebar(
+                    selectedSection: _selectedSection,
+                    onAboutTap: () =>
+                        _scrollTo(_aboutKey, SidebarSection.about),
+                    onProjectsTap: () =>
+                        _scrollTo(_projectsKey, SidebarSection.projects),
+                    onSkillsTap: () =>
+                        _scrollTo(_skillsKey, SidebarSection.skills),
+                    onContactTap: () =>
+                        _scrollTo(_contactKey, SidebarSection.contact),
+                    enableInternalScroll: false,
+                  ),
+                  HeroSection(key: _aboutKey),
+                  ProjectsSection(key: _projectsKey),
+                  SkillsSection(key: _skillsKey),
+                  ContactSection(key: _contactKey),
+                  const BlogSection(),
+                ],
+              ),
             ),
     );
   }

@@ -60,6 +60,7 @@ class SkillsSection extends StatelessWidget {
       'Android',
       'UI/UX',
       'Clean Architecture',
+      'Design',
     ];
 
     return Wrap(

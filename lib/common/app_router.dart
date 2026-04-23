@@ -21,7 +21,7 @@ class AppRoutePaths {
 }
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutePaths.portfolio,
+  initialLocation: AppRoutePaths.splash,
   observers: [AppNavigatorObserver()],
   routes: [
     GoRoute(

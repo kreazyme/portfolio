@@ -33,6 +33,23 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script>
+    // GitHub Pages SPA fix: restore the original URL that was redirected
+    // through 404.html so Flutter/GoRouter sees the correct path.
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var redirectedPath = params.get('p');
+      if (redirectedPath) {
+        params.delete('p');
+        var remaining = params.toString();
+        window.history.replaceState(
+          null,
+          null,
+          redirectedPath + (remaining ? '?' + remaining : '')
+        );
+      }
+    })();
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

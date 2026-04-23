@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting…</title>
+  <script>
+    // GitHub Pages SPA fix: redirect 404s back to index.html
+    // while preserving the full path in a query string so index.html
+    // can restore the URL before Flutter boots.
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      '/?p=' + encodeURIComponent(l.pathname + l.search) +
+      (l.hash ? l.hash : '')
+    );
+  </script>
+</head>
+<body></body>
+</html>
